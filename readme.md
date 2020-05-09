@@ -1,6 +1,7 @@
 
-
 ```sh
+$ cargo test
+$ cargo run "foo%20bar"
 $ cargo build
 $ ./target/debug/udrs
 
