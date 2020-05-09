@@ -1,0 +1,10 @@
+[package]
+name = "udrs"
+version = "0.1.0"
+authors = ["syui <syui@syui.cf>"]
+edition = "2018"
+
+[dependencies]
+url = "1.7"
+failure = "0.1"
+structopt = "0.2"
