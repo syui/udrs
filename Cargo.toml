@@ -1,6 +1,6 @@
 [package]
 name = "udrs"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["syui <syui@syui.cf>"]
 edition = "2018"
 
