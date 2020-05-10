@@ -1,6 +1,3 @@
-# Based on the "trust" template v0.1.2
-# https://github.com/japaric/trust/tree/v0.1.2
-
 dist: trusty
 language: rust
 services: docker
@@ -9,10 +6,8 @@ rust:
 sudo: required
 env:
   global:
-    # CLIの名前を定義
     - NAME=udrs
 
-# LinuxとmacOSとWindowsの環境でビルドする
 matrix:
   include:
     - env: TARGET=x86_64-unknown-linux-musl
@@ -21,36 +16,24 @@ matrix:
     - env: TARGET=x86_64-pc-windows-gnu
 
 before_install:
-  # ビルドツールをインストールする前にRustのツールチェインを最新版に更新
   - rustup self update
 
 install:
-  # crossツールのインストール
   - source ~/.cargo/env
   - cargo install --force cross
 
 script:
-  # cacheが有効になるようにリリースビルドでテストを実行
   - cross test --target $TARGET --release
 
 before_deploy:
-  # リリースビルドを実行
   - cross build --target $TARGET --release
   - bin=$NAME
-  # Windowsのみ拡張子のexeがバイナリネームに含まれる
   - if [[ $TARGET = "x86_64-pc-windows-gnu" ]]; then bin=$NAME.exe; fi
-  # ソースディレクトリ直下に配布用のパッケージを作成
   - tar czf $NAME-$TRAVIS_TAG-$TARGET.tar.gz -C target/$TARGET/release $bin
 
 deploy:
   api_key:
-    # `https://travis-ci.com`でアカウントを作成して、Travis CI のGithub Appを対象リポジトリにインストール
-    # `https://github.com/settings/tokens/new` でGithubのPersonalAccessTokenを生成
-    # gem install travis -v 1.8.9 --no-rdoc --no-ri
-    # travis login --com
-    # travis encrypt --com {PersonalAccessToken}
-    # （Github Appの権限でやってくれればいいのに・・・）
-    secure: "..."
+    secure: "A57+3kFr5MywkEGBDIHtQ6jsgjHoNVi1K9+wu6YfEH3Ts+ABbjmkQaL9pcMybetk0M2B7FO+tDjEFM7/LKPqvqbtif74W7DZIbc120k1Kpokw23LRKv3McZu7H/fYuLYJ9Ak87I3ZBThrVyldIn5nc5grlTzaW/OkBRDlcWA4Y4u4nuPPyxyJy2cLo+kEQqWOo7lKdwL+fSzbbjT8B8ug5QbhY1bZL77xBVd2zNCSJ8Ss9tlSR7e0rtvzxZa5frhE5/MWTymcZC2KP66CxLZ6Cu4rjJtk6gdq/lPtY9S8wkkjl8E/+hf2L/BpixFP4Db8HMsKSLlNXnxNLc7xNWuofzaiI3hwwVIUgEBTdl3lCBj/Un/selAMtwbXeDe2cky5yBTj8bt9lLBI9A0gGWeNWujt2fpX80u5oDvAb9JnFxn4/XrJKs2OiNujnfAqEoxtSmUFMTFv2P8vdDdXWEI5YW8blT0nfklVQmlGky7EE1jIvQWwJAvRqqc6OYELc6nlJE/v8kTsWmtlPF0guRSbPF5rxXC1/iEc1rUouxGF+kU+yZ/GuhYx9r27Mg5JUyZiJvxdKQJ5b2mX7Tm1l0WyGmpfekb85xz00cuEhyEhCiJTXupzl11UKr7Z8W3+lgu0tWmsGOdTTOkUVVPCNhnClCOvZbjKn0fXMJ9B06Ehbs="
   file_glob: true
   file: $NAME-$TRAVIS_TAG-$TARGET.*
   on:
@@ -64,6 +47,5 @@ before_cache:
 
 branches:
   only:
-    # for release tags
     - /^v?\d+\.\d+\.\d+.*$/
     - master
