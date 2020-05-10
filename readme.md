@@ -1,3 +1,4 @@
+the cli tool of the url decode written in rust.
 
 ```sh
 $ cargo test
