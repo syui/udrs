@@ -4,6 +4,8 @@ use structopt::StructOpt;
 use failure::Error;
 use std::io::{self, Read};
 use atty::Stream;
+use log::*;
+use pretty_env_logger;
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(StructOpt, Debug)]
@@ -31,7 +33,9 @@ fn is_stdin(input: Option<&String>) -> bool {
 
 
 fn main() -> Result<()> {
+    pretty_env_logger::init();
     let opt = Opt::from_args();
+    debug!("opt: {:?}", opt);
 
     if opt.input.is_none() && ! is_stdin(opt.input.as_ref()) {
         Opt::clap().print_help()?;
