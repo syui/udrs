@@ -10,13 +10,13 @@ fn main() {
         .usage("cli_tool [command] [x] [y]")
         .command(
             Command::new()
-                .name("base64 encode")
+                .name("b64e")
                 .usage("udrs b64e {}")
                 .action(b64e),
         )
         .command(
             Command::new()
-                .name("base64 decode")
+                .name("b64d")
                 .usage("udrs b64d {}")
                 .action(b64d),
         )
