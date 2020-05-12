@@ -11,37 +11,37 @@ fn main() {
         .usage("cli_tool [command] [x] [y]")
         .command(
             Command::new()
-                .name("b64e")
-                .usage("udrs b64e {}")
-                .action(b64e),
-        )
-        .command(
-            Command::new()
-                .name("b64d")
-                .usage("udrs b64d {}")
-                .action(b64d),
+                .name("e")
+                .usage("udrs e {}")
+                .action(e),
         )
         .command(
             Command::new()
                 .name("d")
                 .usage("udrs d {}")
+                .action(d),
+        )
+        .command(
+            Command::new()
+                .name("ud")
+                .usage("udrs ud {}")
                 .action(ud),
         );
     app.run(args);
 }
 
-fn b64e(c: &Context) {
+fn e(c: &Context) {
     println!("{}", base64::encode(&c.args[0]));
 }
 
-fn b64d(c: &Context) {
+fn d(c: &Context) {
     let by = base64::decode(&c.args[0]).unwrap();
     let res = by.iter().map(|&s| s as char).collect::<String>();
     println!("{:?}",res);
 }
 
 fn ud(_c: &Context) {
-    println!("{}", percent_decode(&_c.args[0].as_bytes()).decode_utf8().unwrap());
+    println!("{}", percent_decode(_c.args[0].as_bytes()).decode_utf8().unwrap());
 }
 
 #[cfg(test)]
