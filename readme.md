@@ -1,13 +1,11 @@
-the cli tool of the url decode written in rust.
+the cli tool of the base64 encode,decode written in rust.
 
 ```sh
-$ cargo test
-$ cargo run "foo%20bar"
-$ cargo build
-$ ./target/debug/udrs
+$ cargo run e "hello world."
+aGVsbG8gd29ybGQu
 
-$ udrs --help
-$ udrs "foo%20bar"
+$ cargo run d "aGVsbG8gd29ybGQu"
+hello world.
 ```
 
 ### v 0.1.1
@@ -33,4 +31,18 @@ $ make install
 ```sh
 #base64 encode
 $ udrs b64e "hello"
+```
+
+### v 0.1.4
+
+```sh
+#base64 encode
+$ udrs e "hello world."
+aGVsbG8gd29ybGQu
+
+$ udrs d "aGVsbG8gd29ybGQu"
+hello world.
+
+$ udrs ud "foo%20bar"
+foo bar
 ```
