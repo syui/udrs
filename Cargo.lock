@@ -395,7 +395,7 @@ dependencies = [
 
 [[package]]
 name = "udrs"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "atty 0.2.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",

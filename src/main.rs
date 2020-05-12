@@ -1,7 +1,6 @@
 use std::env;
 use seahorse::{App, Command, Context};
 use url::percent_encoding::percent_decode;
-
 fn main() {
     let args: Vec<String> = env::args().collect();
     let app = App::new()
@@ -38,6 +37,8 @@ fn b64e(c: &Context) {
 fn b64d(c: &Context) {
     println!("{:?}", &base64::decode(&c.args[0]).unwrap()[..]);
 }
+
 fn ud(_c: &Context) {
     println!("{}", percent_decode(&_c.args[0].as_bytes()).decode_utf8().unwrap());
 }
+
