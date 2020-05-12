@@ -57,7 +57,8 @@ mod tests {
 
     #[test]
     fn base64_encode() {
-        let input = "hello";
-        base64::encode(input);
+        let expected = "aGVsbG8gd29ybGQu";
+        let actual = base64::encode("hello world.");
+        assert_eq!(expected, actual);
     }
 }
