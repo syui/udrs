@@ -35,7 +35,9 @@ fn b64e(c: &Context) {
 }
 
 fn b64d(c: &Context) {
-    println!("{:?}", &base64::decode(&c.args[0]).unwrap()[..]);
+    let by = base64::decode(&c.args[0]).unwrap();
+    let res = by.iter().map(|&s| s as char).collect::<String>();
+    println!("{:?}",res);
 }
 
 fn ud(_c: &Context) {
