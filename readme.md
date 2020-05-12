@@ -28,3 +28,9 @@ $ make run
 $ make install
 ```
 
+### v 0.1.3
+
+```sh
+#base64 encode
+$ udrs b64e "hello"
+```
