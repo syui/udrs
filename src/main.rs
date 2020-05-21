@@ -28,16 +28,23 @@ fn main() {
 }
 
 fn e(c: &Context) {
-    println!("{}", base64::encode(&c.args[0]));
+    if c.args.len() >= 1 {
+        println!("{}", base64::encode(&c.args[0]));
+    }
 }
 
 fn d(c: &Context) {
-    let by = base64::decode(&c.args[0]).unwrap();
-    let res = by.iter().map(|&s| s as char).collect::<String>();
-    println!("{:?}",res);
+    if c.args.len() >= 1 {
+        let by = base64::decode(&c.args[0]).unwrap();
+        let res = by.iter().map(|&s| s as char).collect::<String>();
+        println!("{:?}",res);
+    }
 }
 
 fn ud_a(c: &Context) {
+    if c.args.len() == 0 {
+        std::process::exit(0);
+    }
     let url = Url::parse(&c.args[0]).unwrap();
     if c.bool_flag("lpath") {
         println!("{}", &url[Position::BeforePath..]);
