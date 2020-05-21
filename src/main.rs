@@ -47,7 +47,9 @@ fn ud_a(c: &Context) {
     }
     let url = Url::parse(&c.args[0]).unwrap();
     if c.bool_flag("lpath") {
-        println!("{}", &url[Position::BeforePath..]);
+        let mut lp: String = url[Position::BeforePath..].to_string();
+        lp.remove(0);
+        println!("{}", lp);
     } else if c.bool_flag("domain") {
         println!("{}", url.domain().unwrap());
     } else if c.bool_flag("protocol") {
