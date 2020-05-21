@@ -1,6 +1,7 @@
 use std::env;
-use seahorse::{App, Command, Context};
+use seahorse::{App, Command, Context, Flag, FlagType};
 use url::percent_encoding::percent_decode;
+use url::{Url, Position};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -20,12 +21,8 @@ fn main() {
                 .name("d")
                 .usage("udrs d {}")
                 .action(d),
-        )
-        .command(
-            Command::new()
-                .name("ud")
-                .usage("udrs ud {}")
-                .action(ud),
+        )  
+        .command(ud_c()
         );
     app.run(args);
 }
@@ -40,8 +37,48 @@ fn d(c: &Context) {
     println!("{:?}",res);
 }
 
-fn ud(_c: &Context) {
-    println!("{}", percent_decode(_c.args[0].as_bytes()).decode_utf8().unwrap());
+fn ud_a(c: &Context) {
+    let url = Url::parse(&c.args[0]).unwrap();
+    if c.bool_flag("lpath") {
+        println!("{}", &url[Position::BeforePath..]);
+    } else if c.bool_flag("domain") {
+        println!("{}", url.domain().unwrap());
+    } else if c.bool_flag("protocol") {
+        println!("{}", url.scheme());
+    } else {
+        println!("{}", percent_decode(c.args[0].as_bytes()).decode_utf8().unwrap());
+    }
+}
+
+fn ud_c() -> Command {
+    Command::new()
+        .name("ud")
+        .usage("cli ud [url...]")
+        .action(ud_a)
+        .flag(
+            Flag::new(
+                "lpath",
+                "cli ud [url...] --lpath(-l)",
+                FlagType::Bool,
+                )
+            .alias("l"),
+            )
+        .flag(
+            Flag::new(
+                "domain",
+                "cli ud [url...] --domain(-d)",
+                FlagType::Bool,
+                )
+            .alias("d"),
+            )
+        .flag(
+            Flag::new(
+                "protocol",
+                "cli ud [url...] --protocol(-p)",
+                FlagType::Bool,
+                )
+            .alias("p"),
+            )
 }
 
 #[cfg(test)]

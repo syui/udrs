@@ -4,7 +4,7 @@ export RUST_LOG=url=$(LOG_LEVEL)
 PREFIX := $(HOME)/.cargo
 
 run:
-	cargo run $(APP_ARGS)
+	cargo run ud $(APP_ARGS)
 
 test:
 	cargo test

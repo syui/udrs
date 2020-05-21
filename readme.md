@@ -8,14 +8,14 @@ $ cargo run d "aGVsbG8gd29ybGQu"
 hello world.
 ```
 
-### v 0.1.1
+### v0.1.1
 
 ```sh
 # pipe
 $ echo "foo%20bar" | udrs
 ```
 
-### v 0.1.2
+### v0.1.2
 
 ```sh
 # debug
@@ -26,14 +26,14 @@ $ make run
 $ make install
 ```
 
-### v 0.1.3
+### v0.1.3
 
 ```sh
 #base64 encode
 $ udrs b64e "hello"
 ```
 
-### v 0.1.4
+### v0.1.4
 
 ```sh
 #base64 encode
@@ -45,4 +45,17 @@ hello world.
 
 $ udrs ud "foo%20bar"
 foo bar
+```
+
+### v0.1.5
+
+```sh
+$ udrs ud "https://github.com/ksk001100/seahorse" -l
+/ksk001100/seahorse
+
+$ udrs ud "https://github.com/ksk001100/seahorse" -p
+https
+
+$ udrs ud "https://github.com/ksk001100/seahorse" -d
+github.com
 ```
