@@ -51,7 +51,7 @@ foo bar
 
 ```sh
 $ udrs ud "https://github.com/ksk001100/seahorse" -l
-/ksk001100/seahorse
+ksk001100/seahorse
 
 $ udrs ud "https://github.com/ksk001100/seahorse" -p
 https
@@ -59,3 +59,12 @@ https
 $ udrs ud "https://github.com/ksk001100/seahorse" -d
 github.com
 ```
+
+### v0.1.6
+
+```sh
+# domain -> ip address (v4)
+$ udrs ud "https://github.com" -i
+V4(52.192.72.89:443)
+```
+
