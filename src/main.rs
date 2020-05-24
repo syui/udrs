@@ -2,6 +2,7 @@ use std::env;
 use seahorse::{App, Command, Context, Flag, FlagType};
 use url::percent_encoding::percent_decode;
 use url::{Url, Position};
+use dns_lookup::{getaddrinfo, AddrInfoHints, SockType};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -54,6 +55,19 @@ fn ud_a(c: &Context) {
         println!("{}", url.domain().unwrap());
     } else if c.bool_flag("protocol") {
         println!("{}", url.scheme());
+    } else if c.bool_flag("ip") {
+        let hostname = url.domain().unwrap();
+        let service = url.scheme();
+        let hints = AddrInfoHints {
+          socktype: SockType::Stream.into(),
+          .. AddrInfoHints::default()
+        };
+        let sockets =
+          getaddrinfo(Some(hostname), Some(service), Some(hints))
+            .unwrap().collect::<std::io::Result<Vec<_>>>().unwrap();
+        for socket in sockets {
+          println!("{:?}", socket.sockaddr);
+        }
     } else {
         println!("{}", percent_decode(c.args[0].as_bytes()).decode_utf8().unwrap());
     }
@@ -88,11 +102,18 @@ fn ud_c() -> Command {
                 )
             .alias("p"),
             )
+        .flag(
+            Flag::new(
+                "ip",
+                "cli ud [url...] --ip(-i)",
+                FlagType::Bool,
+                )
+            .alias("i"),
+            )
 }
 
 #[cfg(test)]
 mod tests {
-
     #[test]
     fn decode_space_ok() {
         let expected = "foo bar";
@@ -100,7 +121,6 @@ mod tests {
         let actual = url::percent_encoding::percent_decode(input.as_bytes()).decode_utf8().unwrap();
         assert_eq!(expected, actual);
     }
-
     #[test]
     fn base64_encode() {
         let expected = "aGVsbG8gd29ybGQu";
