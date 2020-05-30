@@ -6,20 +6,17 @@ use dns_lookup::{getaddrinfo, AddrInfoHints, SockType};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let app = App::new()
-        .name(env!("CARGO_PKG_NAME"))
+    let app = App::new(env!("CARGO_PKG_NAME"))
         .author(env!("CARGO_PKG_AUTHORS"))
         .version(env!("CARGO_PKG_VERSION"))
         .usage("cli_tool [command] [x] [y]")
         .command(
-            Command::new()
-                .name("e")
+            Command::new("e")
                 .usage("udrs e {}")
                 .action(e),
         )
         .command(
-            Command::new()
-                .name("d")
+            Command::new("d")
                 .usage("udrs d {}")
                 .action(d),
         )  
@@ -74,40 +71,39 @@ fn ud_a(c: &Context) {
 }
 
 fn ud_c() -> Command {
-    Command::new()
-        .name("ud")
+    Command::new("ud")
         .usage("cli ud [url...]")
         .action(ud_a)
         .flag(
             Flag::new(
                 "lpath",
-                "cli ud [url...] --lpath(-l)",
                 FlagType::Bool,
                 )
+            .usage("udrs ud [url...] --lpath(-l)")
             .alias("l"),
             )
         .flag(
             Flag::new(
                 "domain",
-                "cli ud [url...] --domain(-d)",
                 FlagType::Bool,
                 )
+            .usage("udrs ud [url...] --domain(-d)")
             .alias("d"),
             )
         .flag(
             Flag::new(
                 "protocol",
-                "cli ud [url...] --protocol(-p)",
                 FlagType::Bool,
                 )
+            .usage("udrs ud [url...] --protocol(-p)")
             .alias("p"),
             )
         .flag(
             Flag::new(
                 "ip",
-                "cli ud [url...] --ip(-i)",
                 FlagType::Bool,
                 )
+            .usage("udrs ud [url...] --ip(-i)")
             .alias("i"),
             )
 }
