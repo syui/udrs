@@ -8,31 +8,6 @@ $ cargo run d "aGVsbG8gd29ybGQu"
 hello world.
 ```
 
-### v0.1.1
-
-```sh
-# pipe
-$ echo "foo%20bar" | udrs
-```
-
-### v0.1.2
-
-```sh
-# debug
-$ RUST_LOG=udrs=debug ./udrs "foo%20bar" 
-
-# makefile
-$ make run
-$ make install
-```
-
-### v0.1.3
-
-```sh
-#base64 encode
-$ udrs b64e "hello"
-```
-
 ### v0.1.4
 
 ```sh
@@ -69,5 +44,11 @@ V4(52.192.72.89:443)
 
 $ dig github.com
 52.192.72.89
+```
+
+### v0.1.7
+
+```
+seahorse "0.7.1" -> "1.0.0"
 ```
 
